@@ -1,0 +1,52 @@
+body {
+    
+}
+
+.start-bg{
+    background: url("./assets/start-bg.jpeg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.game-bg{
+    background: url("./assets/background.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.dis-non{
+    display: none;
+}
+
+.play-btn-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.play-btn {
+    background-color: #ec2b81;
+    color: white;
+    height: 60px;
+    width: 200px;
+    font-size: 1.5em;
+    border-radius: 50px;
+    border-color: white;
+    margin-top: 180px;
+}
+
+#board {
+    width: 450px;
+    height: 450px;
+    background-color: lightblue;
+    border: 5px solid slategray;
+    border-radius: 10px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#board img {
+    width: 50px;
+    height: 50px;
+}
