@@ -8,12 +8,20 @@
     <script src="index.js"></script>
 </head>
 <body class="start-bg">
-    <div class="play-btn-wrapper">
-        <button class="play-btn"> Play now!</button>
+    <div class="play-btn-wrapper flex" id="startpg">
+        <button class="play-btn" id="startbtn"> Play now!</button>
     </div>
-    <!-- <div class="">
-        <h1>Score: <span id="score">0</span></h1>
+    <div class="none" id="game">
+        <div class="overlay">
+            <div class="overlay-text" id="result"></div>
+            <button class="reset-btn" id="reset">Reset</button>
+        </div>
+        <div class="header-wrapper">
+            <h1>Taget: 300</h1>
+            <h1>Score: <span id="score"></span></h1>
+            <p id="timer">Timer:60s</p>
+        </div>
         <div id="board"></div>
-    </div> -->
+    </div>
 </body>
 </html>
