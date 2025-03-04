@@ -199,27 +199,22 @@ class Game {
     destroy() {
         // Stop the game loop
         clearInterval(this.loop);
-    
+
         // Clear the board
         document.getElementById("board").innerHTML = "";
-    
+
         // Remove event listeners from tiles
         this.board.forEach(row => {
             row.forEach(tile => {
-                tile.removeEventListener("dragstart", this.dragStart);
-                tile.removeEventListener("dragover", this.dragOver);
-                tile.removeEventListener("dragenter", this.dragEnter);
-                tile.removeEventListener("dragleave", this.dragLeave);
-                tile.removeEventListener("drop", this.dragDrop);
-                tile.removeEventListener("dragend", this.dragEnd);
+                tile.remove();
             });
         });
-    
+
         // Clear references
         this.board = [];
         this.currTile = null;
         this.otherTile = null;
-    }    
+    }
 }
 
 class Timer {
@@ -282,13 +277,31 @@ function handleResult(timer) {
     } else if (timer <= 0) {
         resDom.innerText = "Sorry, Try again!";
     }
-    document.getElementById("reset").addEventListener("click", function() {
-        document.body.classList.replace('game-bg', 'start-bg');
-        overlay.style.display="none";
-        handleReset();
-    });
-
     overlay.style.display = "flex"; 
+}
+
+function startGame() {
+    document.body.classList.replace('start-bg', 'game-bg');
+    document.getElementById('startpg').classList.remove('block', 'flex');
+    document.getElementById('startpg').classList.add('none');
+    const gameDom = document.getElementById('game');
+    gameDom.classList.replace('none', 'block');
+    document.getElementById("board").style.display = "block";
+    document.querySelector(".overlay").style.display = "none";
+
+    game.startGame();
+    gameTimer.start();
+}
+
+function resetGame() {
+    document.body.classList.replace('game-bg', 'start-bg');
+    const gameDom = document.getElementById('game');
+    gameDom.classList.replace('block', 'none');
+    document.getElementById('startpg').classList.remove('none');
+    document.getElementById('startpg').classList.add('block','flex');
+    document.querySelector(".overlay").style.display = "none";
+    document.getElementById("board").style.display = "none";
+    handleReset(); // Restart the game
 }
 
 function handleReset(){
@@ -296,7 +309,7 @@ function handleReset(){
         game.destroy();
     }
     if(gameTimer){
-        gameTimer.stop();
+        gameTimer.reset();
     }
 
     document.getElementById("board").innerHTML = "";
@@ -305,40 +318,16 @@ function handleReset(){
     game = new Game(handleResult);
     gameTimer = new Timer(60, "timer", function(timer) {
         handleResult(timer);
-    });
-
-    // Reset the game display
-    document.getElementById("board").style.display = "none";
-    document.querySelector(".overlay").style.display = "none";
-    document.getElementById("startpg").classList.replace('none', 'block');
-    document.getElementById('game').classList.replace('block', 'none');
+    });   
 
     const playButton = document.getElementById("startbtn");
     const resetButton = document.getElementById("reset");
 
+    playButton.removeEventListener("click", startGame);
+    resetButton.removeEventListener("click", resetGame); 
+
     playButton.addEventListener("click", startGame);
     resetButton.addEventListener("click", resetGame);
-
-    function startGame() {
-        const gameDom = document.getElementById('game');
-        gameDom.classList.replace('none', 'block');
-        document.body.classList.replace('start-bg', 'game-bg');
-        document.getElementById('startpg').classList.remove('block', 'flex');
-        document.getElementById('startpg').classList.add('none');
-        document.getElementById('game').classList.replace('none', 'none');
-        document.getElementById("board").style.display = "block";
-        game.startGame();
-        gameTimer.start();
-    }
-
-    function resetGame() {
-        const gameDom = document.getElementById('game');
-        gameDom.classList.replace('block', 'none');
-        document.getElementById('startpg').classList.replace('none', 'block');
-        document.getElementById('startpg').classList.add('flex');
-        document.querySelector(".overlay").style.display = "none";
-        handleReset();
-    }
 }
 
 window.onload = function() {
